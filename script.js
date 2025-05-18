@@ -1,10 +1,10 @@
 const billDatabase = {
-    'SH': { amount: 100, currency: '₽', status: 'active' },
-    'AB': { amount: 200, currency: '₽', status: 'active' },
-    'CD': { amount: 500, currency: '₽', status: 'active' },
-    'EF': { amount: 1000, currency: '₽', status: 'active' },
-    'GH': { amount: 2000, currency: '₽', status: 'active' },
-    'IJ': { amount: 5000, currency: '₽', status: 'active' }
+    'SH': { amount: 100, status: 'active' },
+    'AB': { amount: 200, status: 'active' },
+    'CD': { amount: 500, status: 'active' },
+    'EF': { amount: 1000, status: 'active' },
+    'GH': { amount: 2000, status: 'active' },
+    'IJ': { amount: 5000, status: 'active' }
 };
 
 document.getElementById('checkBtn').addEventListener('click', checkBill);
@@ -23,14 +23,18 @@ function checkBill() {
         
         if(billData) {
             inputContainer.classList.add('hidden');
-            billContainer.classList.remove('hidden');
             
-            updateBillDisplay(input, billData);
+            setTimeout(() => {
+                billContainer.classList.add('active');
+                billContainer.classList.remove('hidden');
+                updateBillDisplay(input, billData);
+            }, 300);
+            
             return;
         }
     }
     
-    alert('Неверный серийный номер!\nПроверьте формат: 2 буквы + 8 цифр');
+    alert('Ошибка! Проверьте:\n• 2 буквы в начале\n• 8 цифр после\n• Пример: SH12345678');
 }
 
 function updateBillDisplay(serial, data) {
@@ -38,13 +42,12 @@ function updateBillDisplay(serial, data) {
     bill.setAttribute('data-denomination', data.amount);
     
     document.querySelector('.serial-number').textContent = serial;
-    document.querySelector('.denomination').textContent = 
-        `${data.amount}${data.currency}`;
+    document.querySelector('.denomination').textContent = `${data.amount}₽`;
     
-    const voidStamp = document.querySelector('.void-stamp');
+    const stamp = document.querySelector('.void-stamp');
     data.status === 'void' ? 
-        voidStamp.classList.remove('hidden') :
-        voidStamp.classList.add('hidden');
+        stamp.classList.add('active') : 
+        stamp.classList.remove('active');
 }
 
 function voidBill() {
@@ -53,12 +56,12 @@ function voidBill() {
     
     if(billDatabase[code] && billDatabase[code].status === 'active') {
         billDatabase[code].status = 'void';
-        updateBillDisplay(serial, billDatabase[code]);
         localStorage.setItem(serial, 'void');
+        document.querySelector('.void-stamp').classList.add('active');
     }
 }
 
-// Восстановление состояния при загрузке
+// Восстановление состояния
 window.addEventListener('load', () => {
     Object.keys(localStorage).forEach(serial => {
         const code = serial.substring(0, 2);
