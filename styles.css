@@ -6,7 +6,7 @@
 }
 
 body {
-    background: #f5f5f5;
+    background: #f0f2f5;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -17,6 +17,9 @@ body {
     width: 100%;
     max-width: 800px;
     padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
 }
 
 .input-container {
@@ -85,24 +88,25 @@ input {
     border-radius: 15px;
     overflow: hidden;
     box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    margin: 0 auto;
 }
 
 /* Голографическая полоса */
 .hologram-strip {
     position: absolute;
-    top: 40px;
+    top: 50px;
     left: 30px;
-    width: 120px;
-    height: 30px;
+    width: 140px;
+    height: 25px;
     background: linear-gradient(
         90deg,
         rgba(76,175,80,0.4),
         rgba(33,150,243,0.4),
         rgba(156,39,176,0.4)
     );
-    border-radius: 4px;
+    border-radius: 3px;
     animation: hologram 3s infinite linear;
-    box-shadow: inset 0 0 10px rgba(255,255,255,0.3);
+    box-shadow: inset 0 0 15px rgba(255,255,255,0.4);
 }
 
 @keyframes hologram {
@@ -114,10 +118,45 @@ input {
     position: absolute;
     top: 50%;
     left: 50%;
-    width: 140px;
-    height: 140px;
-    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="50%" font-size="90" dominant-baseline="middle" text-anchor="middle" opacity="0.12">₽</text></svg>');
+    width: 160px;
+    height: 160px;
+    background: 
+        url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="50%" font-size="90" dominant-baseline="middle" text-anchor="middle" opacity="0.1">₽</text></svg>'),
+        linear-gradient(45deg, transparent 60%, rgba(0,0,0,0.05) 100%);
     transform: translate(-50%, -50%);
+}
+
+.ornamental-pattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        repeating-linear-gradient(
+            30deg,
+            transparent,
+            transparent 15px,
+            rgba(0,0,0,0.03) 15px,
+            rgba(0,0,0,0.03) 30px
+        ),
+        repeating-linear-gradient(
+            -30deg,
+            transparent,
+            transparent 15px,
+            rgba(0,0,0,0.03) 15px,
+            rgba(0,0,0,0.03) 30px
+        );
+    opacity: 0.4;
+}
+
+.security-lines {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(to right, transparent 50%, rgba(0,0,0,0.03) 50%),
+        linear-gradient(to bottom, transparent 50%, rgba(0,0,0,0.03) 50%);
+    background-size: 4px 4px;
+    opacity: 0.2;
 }
 
 .serial-number {
@@ -144,19 +183,43 @@ input {
     position: absolute;
     bottom: 15px;
     left: 20px;
-    font-size: 6px;
-    color: #667;
+    font-size: 5px;
+    color: #666;
     letter-spacing: 0.8px;
     opacity: 0.7;
+    line-height: 1.5;
 }
 
 .circles-pattern {
     position: absolute;
     width: 100%;
     height: 100%;
-    background-image: radial-gradient(circle at center, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-image: 
+        radial-gradient(circle at 70% 30%, rgba(0,0,0,0.05) 1px, transparent 1px),
+        radial-gradient(circle at 30% 70%, rgba(0,0,0,0.05) 1px, transparent 1px);
     background-size: 25px 25px;
     opacity: 0.3;
+}
+
+.void-btn {
+    position: absolute;
+    bottom: -50px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 10px 30px;
+    background: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    box-shadow: 0 5px 15px rgba(211,47,47,0.3);
+    transition: all 0.3s ease;
+    z-index: 2;
+}
+
+.void-btn:hover {
+    background: #b71c1c;
+    transform: translateX(-50%) scale(1.05);
 }
 
 /* Цвета номиналов */
