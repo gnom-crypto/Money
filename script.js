@@ -34,15 +34,14 @@ function checkBill() {
         }
     }
     
-    alert('Ошибка! Проверьте:\n• 2 буквы в начале\n• 8 цифр после\n• Пример: SH12345678');
+    alert('Ошибка! Проверьте:\n• 2 заглавные буквы в начале\n• 8 цифр после\n• Пример корректного номера: SH12345678');
 }
 
 function updateBillDisplay(serial, data) {
     const bill = document.querySelector('.bill');
     bill.setAttribute('data-denomination', data.amount);
-    
     document.querySelector('.serial-number').textContent = serial;
-    document.querySelector('.denomination').textContent = `${data.amount}₽`
+    document.querySelector('.denomination').textContent = `${data.amount}₽`;
 }
 
 function voidBill() {
@@ -52,11 +51,11 @@ function voidBill() {
     if(billDatabase[code] && billDatabase[code].status === 'active') {
         billDatabase[code].status = 'void';
         localStorage.setItem(serial, 'void');
-        document.querySelector('.void-stamp').classList.add('active');
+        document.querySelector('.bill').style.opacity = '0.4';
+        document.querySelector('.void-btn').disabled = true;
     }
 }
 
-// Восстановление состояния
 window.addEventListener('load', () => {
     Object.keys(localStorage).forEach(serial => {
         const code = serial.substring(0, 2);
