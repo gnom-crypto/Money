@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Детектор банкнот ЦБ РФ</title>
+    <title>Детектор банкнот</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
@@ -13,23 +13,19 @@
                 <input type="text" id="serialInput" placeholder="Введите серийный номер" maxlength="10">
                 <button id="checkBtn" class="check-btn">Проверить</button>
             </div>
-            <div class="help-text">Формат: 2 буквы + 8 цифр (Пример: AB12345678)</div>
         </div>
 
         <div id="billContainer" class="bill-container hidden">
             <div class="bill">
-                <div class="security-strip"></div>
-                <div class="hologram-layer">
-                    <div class="hologram"></div>
-                </div>
+                <div class="hologram-strip"></div>
                 <div class="watermark"></div>
                 <div class="serial-number"></div>
                 <div class="denomination"></div>
-                <div class="microprint">ЦЕНТРАЛЬНЫЙ БАНК РОССИЙСКОЙ ФЕДЕРАЦИИ ⋆ 1993 ⋆</div>
+                <div class="microprint">ЦБ РФ ⋆ Год выпуска: 2024 ⋆ Серия ⋆</div>
                 <div class="circles-pattern"></div>
                 <div class="void-stamp hidden">СПИСАНО</div>
-                <button class="void-btn" onclick="voidBill()">Списать купюру</button>
             </div>
+            <button class="void-btn" onclick="voidBill()">Списать купюру</button>
         </div>
     </div>
     <script src="script.js"></script>
