@@ -3,23 +3,32 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Определитель банкнот</title>
+    <title>Детектор банкнот ЦБ РФ</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <div class="input-group">
-            <input type="text" id="serialInput" placeholder="Введите номер банкноты" maxlength="10">
-            <button id="checkBtn" class="arrow-btn">→</button>
+        <div class="input-container">
+            <div class="input-group">
+                <input type="text" id="serialInput" placeholder="Введите серийный номер" maxlength="10">
+                <button id="checkBtn" class="check-btn">Проверить</button>
+            </div>
+            <div class="help-text">Формат: 2 буквы + 8 цифр (Пример: AB12345678)</div>
         </div>
-        <div id="billDisplay" class="bill hidden">
-            <div class="bill-content">
-                <div class="serial-number"></div>
+
+        <div id="billContainer" class="bill-container hidden">
+            <div class="bill">
+                <div class="security-strip"></div>
+                <div class="hologram-layer">
+                    <div class="hologram"></div>
+                </div>
                 <div class="watermark"></div>
-                <div class="hologram"></div>
-                <div class="amount"></div>
-                <div class="circles"></div>
-                <div class="microtext">ЦБ РФ ⋆ 2024 ⋆ БИЛЛЕТ ⋆ БАНКА ⋆ РОССИИ ⋆</div>
+                <div class="serial-number"></div>
+                <div class="denomination"></div>
+                <div class="microprint">ЦЕНТРАЛЬНЫЙ БАНК РОССИЙСКОЙ ФЕДЕРАЦИИ ⋆ 1993 ⋆</div>
+                <div class="circles-pattern"></div>
+                <div class="void-stamp hidden">СПИСАНО</div>
+                <button class="void-btn" onclick="voidBill()">Списать купюру</button>
             </div>
         </div>
     </div>
