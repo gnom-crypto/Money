@@ -42,12 +42,7 @@ function updateBillDisplay(serial, data) {
     bill.setAttribute('data-denomination', data.amount);
     
     document.querySelector('.serial-number').textContent = serial;
-    document.querySelector('.denomination').textContent = `${data.amount}₽`;
-    
-    const stamp = document.querySelector('.void-stamp');
-    data.status === 'void' ? 
-        stamp.classList.add('active') : 
-        stamp.classList.remove('active');
+    document.querySelector('.denomination').textContent = `${data.amount}₽`
 }
 
 function voidBill() {
