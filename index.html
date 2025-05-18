@@ -3,19 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Определитель купюр</title>
+    <title>Определитель банкнот</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
         <div class="input-group">
-            <input type="text" id="serialInput" placeholder="Введите номер купюры" maxlength="10">
+            <input type="text" id="serialInput" placeholder="Введите номер банкноты" maxlength="10">
             <button id="checkBtn" class="arrow-btn">→</button>
         </div>
         <div id="billDisplay" class="bill hidden">
             <div class="bill-content">
-                <div class="bill-number"></div>
-                <div class="bill-amount"></div>
+                <div class="serial-number"></div>
+                <div class="watermark"></div>
+                <div class="hologram"></div>
+                <div class="amount"></div>
+                <div class="circles"></div>
+                <div class="microtext">ЦБ РФ ⋆ 2024 ⋆ БИЛЛЕТ ⋆ БАНКА ⋆ РОССИИ ⋆</div>
             </div>
         </div>
     </div>
