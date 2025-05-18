@@ -2,11 +2,11 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Arial', sans-serif;
+    font-family: 'PT Sans', sans-serif;
 }
 
 body {
-    background: linear-gradient(135deg, #f0f2f5 0%, #dfe3e8 100%);
+    background: #f0f0f0;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -14,158 +14,210 @@ body {
 }
 
 .container {
-    width: 90%;
-    max-width: 600px;
+    width: 100%;
+    max-width: 800px;
     padding: 20px;
-    position: relative;
 }
 
-.input-group {
-    position: relative;
-    display: flex;
-    gap: 10px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+.input-container {
+    text-align: center;
+    transition: all 0.5s ease;
 }
 
-.input-group.hidden {
+.input-container.hidden {
     opacity: 0;
-    transform: translateY(-30px);
+    transform: translateY(-50px);
     pointer-events: none;
 }
 
-input {
-    width: 100%;
-    padding: 18px 25px;
-    border: 2px solid #e0e0e0;
-    border-radius: 35px;
-    font-size: 18px;
-    background: rgba(255,255,255,0.9);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
-    transition: all 0.3s ease;
-}
-
-input:focus {
-    outline: none;
-    border-color: #4CAF50;
-    box-shadow: 0 8px 20px rgba(76,175,80,0.2);
-}
-
-.arrow-btn {
-    width: 55px;
-    height: 55px;
-    border: none;
-    border-radius: 50%;
-    background: #4CAF50;
-    color: white;
-    font-size: 26px;
-    cursor: pointer;
+.input-group {
+    display: inline-flex;
+    gap: 15px;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
     box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+input {
+    width: 300px;
+    padding: 12px 20px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    font-size: 16px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+}
+
+.check-btn {
+    padding: 12px 25px;
+    background: #2e7d32;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
     transition: all 0.3s ease;
 }
 
-.arrow-btn:hover {
-    background: #43a047;
-    transform: scale(1.08);
+.check-btn:hover {
+    background: #1b5e20;
+    transform: translateY(-2px);
+}
+
+.help-text {
+    margin-top: 15px;
+    color: #666;
+    font-size: 14px;
+}
+
+.bill-container {
+    position: relative;
+    margin: 0 auto;
+    perspective: 1000px;
 }
 
 .bill {
-    position: absolute;
-    width: 520px;
-    height: 260px;
-    background: #fff;
-    border-radius: 18px;
-    overflow: hidden;
-    transform: scale(0.8) translateY(50px);
-    opacity: 0;
-    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
-    cursor: pointer;
-}
-
-.bill.visible {
-    opacity: 1;
-    transform: scale(1) translateY(0);
-}
-
-.bill-content {
     position: relative;
-    height: 100%;
-    padding: 25px;
+    width: 560px;
+    height: 260px;
+    margin: 20px auto;
+    background: #ffffff;
+    border-radius: 15px;
+    transform-style: preserve-3d;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    overflow: hidden;
 }
 
-.serial-number {
+/* Элементы защиты */
+.security-strip {
     position: absolute;
-    top: 18px;
-    right: 25px;
-    font-family: 'Courier New', monospace;
-    font-size: 15px;
-    color: #444;
-    letter-spacing: 1.5px;
+    left: 30%;
+    width: 40%;
+    height: 100%;
+    background: repeating-linear-gradient(
+        45deg,
+        transparent,
+        transparent 10px,
+        rgba(76,175,80,0.3) 10px,
+        rgba(76,175,80,0.3) 20px
+    );
+    opacity: 0.6;
+}
+
+.hologram-layer {
+    position: absolute;
+    top: 40px;
+    left: 40px;
+    width: 80px;
+    height: 80px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.hologram {
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        45deg,
+        #4CAF50,
+        #2196F3,
+        #9C27B0
+    );
+    opacity: 0.4;
+    animation: hologram 5s infinite linear;
+}
+
+@keyframes hologram {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.2); }
+    100% { transform: rotate(360deg) scale(1); }
 }
 
 .watermark {
     position: absolute;
-    width: 130px;
-    height: 130px;
-    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%' y='50%' font-size='40' dominant-baseline='middle' text-anchor='middle' fill='rgba(0,0,0,0.08)'%3E₽%3C/text%3E%3C/svg%3E");
     top: 50%;
     left: 50%;
+    width: 120px;
+    height: 120px;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg"><text x="50%" y="50%" font-size="80" dominant-baseline="middle" text-anchor="middle" opacity="0.15">₽</text></svg>');
     transform: translate(-50%, -50%);
 }
 
-.hologram {
+.serial-number {
     position: absolute;
-    width: 85px;
-    height: 85px;
-    background: linear-gradient(45deg, #ff00ff, #00ffff, #ff9900);
-    opacity: 0.25;
-    top: 22px;
-    left: 22px;
-    border-radius: 6px;
-    animation: hologram 8s infinite linear;
-    mix-blend-mode: multiply;
+    top: 20px;
+    right: 30px;
+    font-family: 'Courier New', monospace;
+    font-size: 16px;
+    color: #333;
+    letter-spacing: 2px;
 }
 
-.amount {
+.denomination {
     position: absolute;
-    bottom: 35px;
-    right: 35px;
-    font-size: 65px;
-    font-weight: 900;
-    color: #2c2c2c;
-    text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+    bottom: 30px;
+    right: 30px;
+    font-size: 60px;
+    font-weight: bold;
+    color: #2d2d2d;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.1);
 }
 
-.circles {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-image: 
-        radial-gradient(circle at 10px 10px, rgba(0,0,0,0.05) 1.5px, transparent 0),
-        linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.03) 100%);
-    background-size: 30px 30px, 100% 100%;
-}
-
-.microtext {
+.microprint {
     position: absolute;
     bottom: 15px;
-    left: 25px;
+    left: 20px;
     font-size: 6px;
     color: #666;
     letter-spacing: 1px;
     opacity: 0.7;
 }
 
-@keyframes hologram {
-    0% { transform: rotate(0deg) scale(1); }
-    50% { transform: rotate(180deg) scale(1.1); }
-    100% { transform: rotate(360deg) scale(1); }
+.circles-pattern {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: radial-gradient(circle at center, rgba(0,0,0,0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.3;
+}
+
+.void-stamp {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-45deg);
+    font-size: 40px;
+    color: #d32f2f;
+    font-weight: bold;
+    text-shadow: 0 0 10px rgba(211,47,47,0.3);
+    opacity: 0.8;
+    pointer-events: none;
+}
+
+.void-btn {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    padding: 8px 20px;
+    background: #d32f2f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.void-btn:hover {
+    background: #b71c1c;
 }
 
 /* Цвета номиналов */
-.bill[data-amount="100"] { background: #c3ddff; }
-.bill[data-amount="200"] { background: #b8e5b8; }
-.bill[data-amount="500"] { background: #ffe87e; }
-.bill[data-amount="1000"] { background: #ffb3b3; }
-.bill[data-amount="2000"] { background: #dcc7ff; }
-.bill[data-amount="5000"] { background: #d4c6b8; }
+.bill[data-denomination="100"] { background: #d1e8ff; }
+.bill[data-denomination="200"] { background: #c8e6c9; }
+.bill[data-denomination="500"] { background: #fff9c4; }
+.bill[data-denomination="1000"] { background: #ffcdd2; }
+.bill[data-denomination="2000"] { background: #e1bee7; }
+.bill[data-denomination="5000"] { background: #d7ccc8; }
