@@ -6,7 +6,7 @@
 }
 
 body {
-    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    background: linear-gradient(135deg, #f0f2f5 0%, #dfe3e8 100%);
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -17,96 +17,155 @@ body {
     width: 90%;
     max-width: 600px;
     padding: 20px;
+    position: relative;
 }
 
 .input-group {
     position: relative;
     display: flex;
     gap: 10px;
-    margin-bottom: 2rem;
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.input-group.hidden {
+    opacity: 0;
+    transform: translateY(-30px);
+    pointer-events: none;
 }
 
 input {
     width: 100%;
-    padding: 15px 20px;
-    border: none;
-    border-radius: 30px;
+    padding: 18px 25px;
+    border: 2px solid #e0e0e0;
+    border-radius: 35px;
     font-size: 18px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: rgba(255,255,255,0.9);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.08);
     transition: all 0.3s ease;
 }
 
 input:focus {
     outline: none;
-    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.2);
-    transform: translateY(-2px);
+    border-color: #4CAF50;
+    box-shadow: 0 8px 20px rgba(76,175,80,0.2);
 }
 
 .arrow-btn {
-    width: 50px;
-    height: 50px;
+    width: 55px;
+    height: 55px;
     border: none;
     border-radius: 50%;
     background: #4CAF50;
     color: white;
-    font-size: 24px;
+    font-size: 26px;
     cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
     transition: all 0.3s ease;
 }
 
 .arrow-btn:hover {
-    background: #45a049;
-    transform: scale(1.05);
+    background: #43a047;
+    transform: scale(1.08);
 }
 
 .bill {
-    position: relative;
-    background: white;
-    border-radius: 20px;
-    padding: 30px;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-    animation: slideUp 0.5s ease;
+    position: absolute;
+    width: 520px;
+    height: 260px;
+    background: #fff;
+    border-radius: 18px;
+    overflow: hidden;
+    transform: scale(0.8) translateY(50px);
+    opacity: 0;
+    transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+    box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    cursor: pointer;
 }
 
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translateY(50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+.bill.visible {
+    opacity: 1;
+    transform: scale(1) translateY(0);
 }
 
 .bill-content {
     position: relative;
-    z-index: 1;
+    height: 100%;
+    padding: 25px;
 }
 
-.bill-number {
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-    margin-bottom: 20px;
+.serial-number {
+    position: absolute;
+    top: 18px;
+    right: 25px;
+    font-family: 'Courier New', monospace;
+    font-size: 15px;
+    color: #444;
+    letter-spacing: 1.5px;
 }
 
-.bill-amount {
-    font-size: 72px;
-    font-weight: bold;
-    text-align: center;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+.watermark {
+    position: absolute;
+    width: 130px;
+    height: 130px;
+    background: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Ctext x='50%' y='50%' font-size='40' dominant-baseline='middle' text-anchor='middle' fill='rgba(0,0,0,0.08)'%3E₽%3C/text%3E%3C/svg%3E");
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
 }
 
-.hidden {
-    display: none;
+.hologram {
+    position: absolute;
+    width: 85px;
+    height: 85px;
+    background: linear-gradient(45deg, #ff00ff, #00ffff, #ff9900);
+    opacity: 0.25;
+    top: 22px;
+    left: 22px;
+    border-radius: 6px;
+    animation: hologram 8s infinite linear;
+    mix-blend-mode: multiply;
 }
 
-/* Цвета для разных номиналов */
-.bill[data-amount="100"] { background: linear-gradient(45deg, #b3e5fc, #81d4fa); }
-.bill[data-amount="200"] { background: linear-gradient(45deg, #c8e6c9, #a5d6a7); }
-.bill[data-amount="500"] { background: linear-gradient(45deg, #fff9c4, #fff59d); }
-.bill[data-amount="1000"] { background: linear-gradient(45deg, #ffcdd2, #ef9a9a); }
-.bill[data-amount="2000"] { background: linear-gradient(45deg, #e1bee7, #ce93d8); }
-.bill[data-amount="5000"] { background: linear-gradient(45deg, #d7ccc8, #bcaaa4); }
+.amount {
+    position: absolute;
+    bottom: 35px;
+    right: 35px;
+    font-size: 65px;
+    font-weight: 900;
+    color: #2c2c2c;
+    text-shadow: 3px 3px 6px rgba(0,0,0,0.1);
+}
+
+.circles {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(circle at 10px 10px, rgba(0,0,0,0.05) 1.5px, transparent 0),
+        linear-gradient(90deg, transparent 50%, rgba(0,0,0,0.03) 100%);
+    background-size: 30px 30px, 100% 100%;
+}
+
+.microtext {
+    position: absolute;
+    bottom: 15px;
+    left: 25px;
+    font-size: 6px;
+    color: #666;
+    letter-spacing: 1px;
+    opacity: 0.7;
+}
+
+@keyframes hologram {
+    0% { transform: rotate(0deg) scale(1); }
+    50% { transform: rotate(180deg) scale(1.1); }
+    100% { transform: rotate(360deg) scale(1); }
+}
+
+/* Цвета номиналов */
+.bill[data-amount="100"] { background: #c3ddff; }
+.bill[data-amount="200"] { background: #b8e5b8; }
+.bill[data-amount="500"] { background: #ffe87e; }
+.bill[data-amount="1000"] { background: #ffb3b3; }
+.bill[data-amount="2000"] { background: #dcc7ff; }
+.bill[data-amount="5000"] { background: #d4c6b8; }
