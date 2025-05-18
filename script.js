@@ -1,10 +1,10 @@
-const billCodes = {
-    'SH': 100,
-    'AB': 200,
-    'CD': 500,
-    'EF': 1000,
-    'GH': 2000,
-    'IJ': 5000
+const billDatabase = {
+    'SH': { amount: 100, currency: '₽', status: 'active' },
+    'AB': { amount: 200, currency: '₽', status: 'active' },
+    'CD': { amount: 500, currency: '₽', status: 'active' },
+    'EF': { amount: 1000, currency: '₽', status: 'active' },
+    'GH': { amount: 2000, currency: '₽', status: 'active' },
+    'IJ': { amount: 5000, currency: '₽', status: 'active' }
 };
 
 document.getElementById('checkBtn').addEventListener('click', checkBill);
@@ -14,41 +14,56 @@ document.getElementById('serialInput').addEventListener('keypress', (e) => {
 
 function checkBill() {
     const input = document.getElementById('serialInput').value.toUpperCase().trim();
-    const inputGroup = document.querySelector('.input-group');
-    const billDisplay = document.getElementById('billDisplay');
+    const inputContainer = document.querySelector('.input-container');
+    const billContainer = document.getElementById('billContainer');
     
     if(/^[A-Z]{2}\d{8}$/.test(input)) {
-        const code = input.substr(0, 2);
-        const amount = billCodes[code];
+        const code = input.substring(0, 2);
+        const billData = billDatabase[code];
         
-        if(amount) {
-            inputGroup.classList.add('hidden');
+        if(billData) {
+            inputContainer.classList.add('hidden');
+            billContainer.classList.remove('hidden');
             
-            setTimeout(() => {
-                billDisplay.classList.add('visible');
-                billDisplay.setAttribute('data-amount', amount);
-                billDisplay.querySelector('.serial-number').textContent = input;
-                billDisplay.querySelector('.amount').textContent = `${amount}₽`;
-                billDisplay.classList.remove('hidden');
-            }, 400);
-            
+            updateBillDisplay(input, billData);
             return;
         }
     }
     
-    alert('Ошибка! Введите номер в формате: 2 буквы + 8 цифр\nПример: SH12345678');
+    alert('Неверный серийный номер!\nПроверьте формат: 2 буквы + 8 цифр');
 }
 
-document.getElementById('billDisplay').addEventListener('click', resetUI);
-
-function resetUI() {
-    const billDisplay = document.getElementById('billDisplay');
-    billDisplay.classList.remove('visible');
-    billDisplay.classList.add('hidden');
+function updateBillDisplay(serial, data) {
+    const bill = document.querySelector('.bill');
+    bill.setAttribute('data-denomination', data.amount);
     
-    setTimeout(() => {
-        document.querySelector('.input-group').classList.remove('hidden');
-        document.getElementById('serialInput').value = '';
-        document.getElementById('serialInput').focus();
-    }, 300);
+    document.querySelector('.serial-number').textContent = serial;
+    document.querySelector('.denomination').textContent = 
+        `${data.amount}${data.currency}`;
+    
+    const voidStamp = document.querySelector('.void-stamp');
+    data.status === 'void' ? 
+        voidStamp.classList.remove('hidden') :
+        voidStamp.classList.add('hidden');
 }
+
+function voidBill() {
+    const serial = document.querySelector('.serial-number').textContent;
+    const code = serial.substring(0, 2);
+    
+    if(billDatabase[code] && billDatabase[code].status === 'active') {
+        billDatabase[code].status = 'void';
+        updateBillDisplay(serial, billDatabase[code]);
+        localStorage.setItem(serial, 'void');
+    }
+}
+
+// Восстановление состояния при загрузке
+window.addEventListener('load', () => {
+    Object.keys(localStorage).forEach(serial => {
+        const code = serial.substring(0, 2);
+        if(billDatabase[code]) {
+            billDatabase[code].status = 'void';
+        }
+    });
+});
